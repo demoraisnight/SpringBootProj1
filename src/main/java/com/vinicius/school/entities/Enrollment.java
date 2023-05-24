@@ -46,11 +46,11 @@ public class Enrollment {
         id.setUser(user);
     }
 
-    public Course getOffer() {
+    public Course getCourse() {
         return id.getCourse();
     }
 
-    public void setOffer(Course course) {
+    public void setCourse(Course course) {
         id.setCourse(course);
     }
 
