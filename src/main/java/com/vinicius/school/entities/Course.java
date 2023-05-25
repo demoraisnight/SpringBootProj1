@@ -24,16 +24,17 @@ public class Course {
 
     // professor here -> Many to One(or zero)...
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "user_id")
     private User professor;
 
     public Course() {
     }
-    public Course(Long id, String name, String imgUri) {
+    public Course(Long id, String name, String imgUri, User professor) {
         super();
         this.id = id;
         this.name = name;
         this.imgUri = imgUri;
+        this.professor = professor;
     }
 
     public Long getId() {

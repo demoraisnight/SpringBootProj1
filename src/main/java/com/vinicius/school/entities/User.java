@@ -1,5 +1,6 @@
 package com.vinicius.school.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -27,8 +28,9 @@ public class User{
     @OneToMany(mappedBy = "user")
     private List<Notification> notifications = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "professor")
-    private HashSet<Course> courses = new HashSet<>();
+    private List<Course> courses = new ArrayList<>();
 
     public User() {
     }
@@ -91,7 +93,7 @@ public class User{
         return notifications;
     }
 
-    public HashSet<Course> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
