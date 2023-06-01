@@ -6,14 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 
 public class UserInputDTO {
 
-    @NotBlank
+    @NotBlank(message = "A user must have a name")
     private String name;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Must have an email")
+    @Email(message = "Must be a valid email")
     private String email;
 
-    @NotBlank(message = "Must have a password")
+    @NotBlank(message = "A user must have a password")
     private String password;
 
     public String getName() {

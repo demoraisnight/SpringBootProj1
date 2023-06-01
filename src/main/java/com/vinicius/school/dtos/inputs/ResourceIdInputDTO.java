@@ -1,7 +1,10 @@
 package com.vinicius.school.dtos.inputs;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class ResourceIdInputDTO {
 
+    @NotBlank(message = "Must have a resource")
     private Long id;
 
     public Long getId() {

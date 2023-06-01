@@ -1,13 +1,22 @@
 package com.vinicius.school.dtos.inputs;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class ContentInputDTO {
 
+    @NotBlank(message = "Must have a title")
     private String title;
+
+    @NotBlank(message = "Must have a position")
     private Integer position;
+
+    @NotBlank(message = "Must have a section")
     private SectionIdInputDTO section;
 
-
+    @NotBlank(message = "Must have a text content")
     private String textContent;
+
+    @NotBlank(message = "Must have a video uri")
     private String videoUri;
 
     public String getTitle() {

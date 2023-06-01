@@ -2,22 +2,17 @@ package com.vinicius.school.dtos.inputs;
 
 import com.vinicius.school.entities.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.Instant;
 
 public class NotificationInputDTO {
 
-    private Long id;
+    @NotBlank(message = "Must have a text")
     private String text;
+
+    @NotBlank(message = "Must have an user")
     private UserIdInputDTO user;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getText() {
         return text;

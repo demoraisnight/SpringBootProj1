@@ -1,7 +1,10 @@
 package com.vinicius.school.dtos.inputs;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class SectionIdInputDTO {
 
+    @NotBlank(message = "Must have a section")
     private Long id;
 
     public Long getId() {

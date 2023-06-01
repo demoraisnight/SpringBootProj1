@@ -1,11 +1,15 @@
 package com.vinicius.school.dtos.inputs;
 
 
+import jakarta.validation.constraints.NotBlank;
 
 public class CourseInputDTO {
 
+    @NotBlank(message = "Must have a name")
     private String name;
     private String imgUri;
+
+    @NotBlank(message = "Must have a professor")
     private UserIdInputDTO professor;
 
     public String getName() {

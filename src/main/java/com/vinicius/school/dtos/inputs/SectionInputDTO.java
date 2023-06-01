@@ -3,15 +3,23 @@ package com.vinicius.school.dtos.inputs;
 import com.vinicius.school.entities.Resource;
 import com.vinicius.school.entities.Section;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 public class SectionInputDTO {
 
-
+    @NotBlank(message = "A section must have a title")
     private String title;
+    @NotBlank(message = "A section must have a description")
     private String description;
+    @NotBlank(message = "A section must have a position")
     private Integer position;
+
     private String imgUri;
+
+    @NotBlank(message = "A section must have a resource")
     private ResourceIdInputDTO resource;
+
+    @NotBlank(message = "A section must have a prerequisite")
     private SectionIdInputDTO prerequisite;
 
     public String getTitle() {

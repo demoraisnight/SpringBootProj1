@@ -1,15 +1,23 @@
 package com.vinicius.school.dtos.inputs;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class TaskInputDTO {
 
+    @NotBlank(message = "A task must have a title")
     private String title;
+    @NotBlank(message = "A task must have a position")
     private Integer position;
+    @NotBlank(message = "A task must have a section")
     private SectionIdInputDTO section;
 
-
+    @NotBlank(message = "A task must have a description")
     private String description;
+    @NotBlank(message = "A task must have a question count")
     private Integer questionCount;
+    @NotBlank(message = "A task must have an approval count")
     private Integer approvalCount;
+    @NotBlank(message = "A task must have a weight")
     private Double weight;
 
     public String getTitle() {

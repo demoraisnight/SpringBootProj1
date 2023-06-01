@@ -1,14 +1,24 @@
 package com.vinicius.school.dtos.inputs;
 
 import com.vinicius.school.entities.enums.ResourceType;
+import jakarta.validation.constraints.NotBlank;
 
 public class ResourceInputDTO {
 
+    @NotBlank(message = "Must have a title")
     private String title;
+
+    @NotBlank(message = "Must have a description")
     private String description;
+
+    @NotBlank(message = "Must have a position")
     private Long position;
     private Long imgUri;
+
+    @NotBlank(message = "Must have a type")
     private ResourceType type;
+
+    @NotBlank(message = "Must have a course")
     private CourseIdInputDTO course;
 
     public String getTitle() {
