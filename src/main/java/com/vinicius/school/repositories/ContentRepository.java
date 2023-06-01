@@ -1,12 +1,12 @@
 package com.vinicius.school.repositories;
 
 
-import com.vinicius.school.entities.Course;
+import com.vinicius.school.entities.Content;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course, Long> {
+public interface ContentRepository extends JpaRepository<Content, Long> {
 
 }
