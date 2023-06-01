@@ -2,10 +2,12 @@ package com.vinicius.school.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.time.Instant;
 
 @Entity
+@Table(name = "tb_task")
 public class Task extends Lesson {
 
     private String description;

@@ -24,7 +24,7 @@ public abstract class Lesson {
     private Set<Deliver> deliveries = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "tb_lesson_done",
+    @JoinTable(name = "tb_lessons_done",
     joinColumns = @JoinColumn(name = "lesson_id"),
             inverseJoinColumns = {
             @JoinColumn(name = "user_id"), @JoinColumn(name = "course_id")})

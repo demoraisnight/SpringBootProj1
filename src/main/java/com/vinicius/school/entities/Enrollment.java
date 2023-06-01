@@ -36,7 +36,11 @@ public class Enrollment {
         this.deliveries = deliveries;
         this.lessonsDone = lessonsDone;
     }
-
+    public Enrollment(User user, Course course) {
+        id.setUser(user);
+        id.setCourse(course);
+        available = true;
+    }
 
     public User getStudent() {
         return id.getUser();
