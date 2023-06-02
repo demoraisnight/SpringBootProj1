@@ -2,12 +2,13 @@ package com.vinicius.school.entities.pk;
 
 import com.vinicius.school.entities.Course;
 import com.vinicius.school.entities.User;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
 @Embeddable
-public class EnrollmentPK {
+public class EnrollmentPK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")

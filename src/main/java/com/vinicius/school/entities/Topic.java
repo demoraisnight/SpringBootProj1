@@ -1,6 +1,6 @@
 package com.vinicius.school.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.time.Instant;
 import java.util.*;

@@ -32,10 +32,10 @@ public class EnrollmentService {
     private EnrollmentRepository repository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseService courseService;
 
     @Autowired
     private com.vinicius.school.services.assembler.EnrollmentModelAssembler enrollmentModelAssembler;
@@ -51,8 +51,8 @@ public class EnrollmentService {
     }
     @Transactional
     public EnrollmentDTO save(Long id, Long userId) {
-        User user = userRepository.getReferenceById(userId);
-        Course course = courseRepository.getReferenceById(id);
+        User user = userService.searchOrThrow(userId);
+        Course course = courseService.searchOrThrow(id);
         Enrollment entity = new Enrollment();
         entity.setStudent(user);
         entity.setCourse(course);
@@ -71,27 +71,31 @@ public class EnrollmentService {
 
     @Transactional(readOnly = true)
     public EnrollmentDTO findById(Long userId, Long courseId) {
-        return enrollmentModelAssembler.toModel(repository.findByIdCourseIdAndIdUserId(courseId,userId));
+        Enrollment enrollment = searchOrThrow(userId,courseId);
+        return enrollmentModelAssembler.toModel(enrollment);
     }
 
     @Transactional
     public EnrollmentDTO insert(Long userId, Long courseId) {
-        User user = userRepository.getReferenceById(userId);
-        Course course = courseRepository.getReferenceById(courseId);
+
+        User user = userService.searchOrThrow(userId);
+        Course course = courseService.searchOrThrow(courseId);
+
         Enrollment entity = new Enrollment();
-        entity.setStudent(user);
-        entity.setCourse(course);
+
+        entity.getId().setUser(user);
+        entity.getId().setCourse(course);
+
+        if (enrollmentExists(userId,courseId)){
+            throw new DatabaseException("Enrollment already exists");
+        }
+
         entity.setAvailable(true);
         entity.setEnrollMoment(Instant.now());
         entity = repository.save(entity);
+
         return enrollmentModelAssembler.toModel(entity);
 
-    }
-
-    @Transactional
-    public void deleteById(Long userId, Long courseId) {
-        Enrollment entity = searchOrThrow(userId,courseId);
-        repository.delete(entity);
     }
 
     @Transactional
@@ -99,15 +103,25 @@ public class EnrollmentService {
         Enrollment entity = searchOrThrow(userId,courseId);
 
         Enrollment newEntity = new Enrollment();
+        if (enrollmentExists(newUserId,newCourseId)){
+            throw new DatabaseException("Enrollment already exists");
+        }
         newEntity.setAvailable(entity.isAvailable());
-        newEntity.setStudent(userRepository.getReferenceById(newUserId));
+        newEntity.setStudent(userService.searchOrThrow(newUserId));
+        newEntity.setCourse(courseService.searchOrThrow(newCourseId));
         newEntity.setEnrollMoment(Instant.now());
-        newEntity.setCourse(courseRepository.getReferenceById(newCourseId));
 
         repository.delete(entity);
 
         newEntity = repository.save(newEntity);
         return enrollmentModelAssembler.toModel(newEntity);
+    }
+
+
+    @Transactional
+    public void deleteById(Long userId, Long courseId) {
+        Enrollment entity = searchOrThrow(userId,courseId);
+        repository.delete(entity);
     }
 
     @Transactional
@@ -129,12 +143,17 @@ public class EnrollmentService {
 
 
     public Enrollment searchOrThrow(Long userId, Long courseId){
-        try {
-            return repository.findByIdCourseIdAndIdUserId(courseId, userId);
-        } catch (
-                EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException("Id not found");
-        }
+       Enrollment enrollment = repository.findByIdCourseIdAndIdUserId(courseId, userId);
+
+       if(enrollment == null){
+       throw new ResourceNotFoundException("Enrollment not found");}
+
+       return enrollment;
+    }
+
+    public boolean enrollmentExists(Long userId, Long courseId){
+        Enrollment enrollment = repository.findByIdCourseIdAndIdUserId(courseId, userId);
+        return enrollment != null;
     }
 
 }

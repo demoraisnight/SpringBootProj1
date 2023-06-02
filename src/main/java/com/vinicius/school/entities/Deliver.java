@@ -1,7 +1,7 @@
 package com.vinicius.school.entities;
 
 import com.vinicius.school.entities.enums.DeliverStatus;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.time.Instant;
 

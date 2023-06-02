@@ -14,13 +14,19 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
 
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository repository;
@@ -39,21 +45,22 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserDTO findById(@PathVariable Long id) {
+    public UserDTO findById(Long id) {
         return userModelAssembler.toModel(searchOrThrow(id));
     }
 
     @Transactional
-    public UserDTO insert(@RequestBody UserInputDTO userInput) {
+    public UserDTO insert(UserInputDTO userInput) {
         User user = userInputDisassembler.toDomainObject(userInput);
+        user.setPassword(passwordEncoder.encode(userInput.getPassword()));
         user = repository.save(user);
         return userModelAssembler.toModel(user);
 
     }
 
     @Transactional
-    public UserDTO update(@PathVariable Long id,
-                             @RequestBody UserInputDTO userInput) {
+    public UserDTO update(Long id,
+                             UserInputDTO userInput) {
         User user = searchOrThrow(id);
         userInputDisassembler.copyToDomainObject(userInput, user);
         user = repository.save(user);
@@ -61,7 +68,7 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteById(@PathVariable Long id) {
+    public void deleteById(Long id) {
         try {
             repository.deleteById(id);
         }
@@ -76,7 +83,16 @@ public class UserService {
 
     public User searchOrThrow(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Entity Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        User user = repository.findByEmail(username);
+        if(user == null){
+            throw new UsernameNotFoundException("Email not found");
+        }
+        return user;
+    }
 }

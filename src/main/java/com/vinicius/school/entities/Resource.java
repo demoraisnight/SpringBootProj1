@@ -1,7 +1,7 @@
 package com.vinicius.school.entities;
 
 import com.vinicius.school.entities.enums.ResourceType;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;

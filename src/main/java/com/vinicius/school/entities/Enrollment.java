@@ -1,7 +1,7 @@
 package com.vinicius.school.entities;
 
 import com.vinicius.school.entities.pk.EnrollmentPK;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.time.Instant;
 import java.util.HashSet;
