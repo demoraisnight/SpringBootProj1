@@ -1,7 +1,7 @@
 package com.vinicius.school.dtos.inputs;
 
 import com.vinicius.school.entities.enums.DeliverStatus;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 public class DeliverInputDTO {
 

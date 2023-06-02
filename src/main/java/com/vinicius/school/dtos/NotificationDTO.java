@@ -2,7 +2,7 @@ package com.vinicius.school.dtos;
 
 import com.vinicius.school.dtos.partials.UserPartialDTO;
 import com.vinicius.school.entities.User;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.time.Instant;
 

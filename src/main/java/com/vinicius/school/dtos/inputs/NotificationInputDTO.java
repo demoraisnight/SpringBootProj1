@@ -1,8 +1,8 @@
 package com.vinicius.school.dtos.inputs;
 
 import com.vinicius.school.entities.User;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import java.time.Instant;
 

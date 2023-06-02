@@ -2,8 +2,8 @@ package com.vinicius.school.dtos.inputs;
 
 import com.vinicius.school.entities.Resource;
 import com.vinicius.school.entities.Section;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 public class SectionInputDTO {
 

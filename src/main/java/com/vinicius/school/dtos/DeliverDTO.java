@@ -3,7 +3,7 @@ package com.vinicius.school.dtos;
 import com.vinicius.school.entities.Enrollment;
 import com.vinicius.school.entities.Lesson;
 import com.vinicius.school.entities.enums.DeliverStatus;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.time.Instant;
 

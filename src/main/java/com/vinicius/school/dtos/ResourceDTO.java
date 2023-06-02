@@ -3,7 +3,7 @@ package com.vinicius.school.dtos;
 import com.vinicius.school.entities.Course;
 import com.vinicius.school.entities.Section;
 import com.vinicius.school.entities.enums.ResourceType;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
