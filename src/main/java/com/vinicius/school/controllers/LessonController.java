@@ -7,11 +7,12 @@ import com.vinicius.school.dtos.inputs.ContentInputDTO;
 import com.vinicius.school.dtos.inputs.LessonInputDTO;
 import com.vinicius.school.dtos.inputs.TaskInputDTO;
 import com.vinicius.school.services.LessonService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,12 +29,12 @@ public class LessonController {
     public ResponseEntity<Page<LessonDTO>> list(Pageable pageable) {
         return ResponseEntity.ok().body(service.findAll(pageable));
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
     @PostMapping(value = "/task")
     public ResponseEntity<TaskDTO> insertTask(@Valid @RequestBody TaskInputDTO lessonInput) {
         TaskDTO dto = service.insertTask(lessonInput);
@@ -41,7 +42,7 @@ public class LessonController {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
     @PostMapping(value = "/content")
     public ResponseEntity<ContentDTO> insertContent(@Valid @RequestBody ContentInputDTO lessonInput) {
         ContentDTO dto = service.insertContent(lessonInput);
@@ -61,7 +62,7 @@ public class LessonController {
    //                                          @Valid @RequestBody LessonInputDTO lessonInput) {
    //     return ResponseEntity.ok().body(service.update(id, lessonInput));
   //  }
-
+   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Long id) {
         service.deleteById(id);

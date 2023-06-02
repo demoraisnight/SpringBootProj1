@@ -4,11 +4,12 @@ package com.vinicius.school.controllers;
 import com.vinicius.school.dtos.DeliverDTO;
 import com.vinicius.school.dtos.inputs.DeliverInputDTO;
 import com.vinicius.school.services.DeliverService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -19,7 +20,7 @@ import java.net.URI;
 public class DeliverController {
     @Autowired
     private DeliverService service;
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTRUCTOR', 'ROLE_STUDENT')")
     @GetMapping
     public ResponseEntity<Page<DeliverDTO>> list(Pageable pageable) {
         return ResponseEntity.ok().body(service.findAll(pageable));
